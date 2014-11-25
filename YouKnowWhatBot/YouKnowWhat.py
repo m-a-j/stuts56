@@ -1,9 +1,9 @@
 '''
-Created on 15.09.2014
+Created on 15.09.2014, edited on 25.11.2014
 
-@author: Esther Seyffarth
+@author: Esther Seyffarth, edited by Markus Jenning
 
-written in Python 2.7
+written in Python 3.3
 '''
 # coding=utf8
 
@@ -42,13 +42,28 @@ pattern = config.pattern
 
 class StdOutListener(StreamListener):
     def on_status(self, status):
-        global tweets_count        
+        #print(".")
+        global tweets_count
+        #if tweets_count < 1:
+        print(" - ")
         # Make sure the tweet matches the exact RE you defined earlier
         if re.match(pattern, status.text.lower()):
-            tweets_count += 1
-            print(status.text)
-            api.retweet(status.id)
-       
+          tweets_count += 1
+          #█▓░▒
+          try:
+            print('░░░░ ',end="")
+            print(status.text,end="",flush=True)
+            #api.retweet(status.id)
+          except UnicodeEncodeError:
+            print('▒░▒░',end="")
+        else:
+          tweets_count += 1
+          try:
+            print('████ ',end="")
+            print(status.text,end="")
+          except UnicodeEncodeError:
+            print('▒█▒█',end="")
+        
         if tweets_count == config.tweets_in_a_row:
             tweets_count = 0
             # Wait specified number of seconds before next RT wave
