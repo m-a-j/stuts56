@@ -1,5 +1,5 @@
 '''
-Created on 15.09.2014, edited on 25.11.2014
+Created on 15.09.2014, edited on 27.11.2014
 
 @author: Esther Seyffarth, edited by Markus Jenning
 
@@ -53,16 +53,23 @@ class StdOutListener(StreamListener):
           try:
             print('░░░░ ',end="")
             print(status.text,end="",flush=True)
-            #api.retweet(status.id)
+            api.retweet(status.id)
           except UnicodeEncodeError:
-            print('▒░▒░',end="")
+            print('▒░▒░ UE',end="")
+          except:
+            print('▒░▒░ XE',end="")
+            tweets_count == config.tweets_in_a_row
         else:
           tweets_count += 1
           try:
             print('████ ',end="")
             print(status.text,end="")
+            api.retweet(status.id)
           except UnicodeEncodeError:
-            print('▒█▒█',end="")
+            print('▒█▒█ UE2',end="")
+          except:
+            print('▒█▒█ XE2',end="")
+            tweets_count == config.tweets_in_a_row
         
         if tweets_count == config.tweets_in_a_row:
             tweets_count = 0
